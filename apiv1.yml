@@ -99,6 +99,53 @@ paths:
             description: OK
           '400':
             description: Invalid app id specified
+  /devrant/rants/{rantId}/comments:
+    post:
+      description: This endpoint requires a user_id, token_token, and token_key. Refer to the top of the page for information about these
+      
+      parameters:
+        - in: path
+          name: rantId
+          schema:
+            type: integer
+          required: true
+          description: ID of the rant to comment on
+      
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: integer
+                  description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+                  
+                plat:
+                  type: integer
+                  description: Platform identifier. This MUST be "2"
+                
+                user_id:
+                  type: integer
+                  description: user_id of the authenticated user
+                
+                token_id:
+                  type: integer
+                  description: Authentication token id
+                
+                token_key:
+                  type: string
+                  description: Authenticaiton token key
+                
+                comment:
+                  type: string
+                  description: The main content of the comment
+
+      responses:
+          '200':
+            description: OK
+          '400':
+            description: Invalid app id specified
 
   /devrant/collabs:
     get:
