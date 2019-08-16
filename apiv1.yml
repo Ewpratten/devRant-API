@@ -152,3 +152,199 @@ paths:
           description: OK
         '400':
           description: Invalid app id specified
+  /devrant/search/tags:
+    get:
+      description: Get a list of frequently used search terms
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /devrant/story-rants:
+    get:
+      description: Get a sorted list of long rants
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: query
+          name: sort
+          schema:
+            type: string
+            default: algo
+            enum: ["algo", "top", "recent"]
+          required: false
+          description: Which stream to fetch rants from
+        - in: query
+          name: range
+          schema:
+            type: string
+            default: all
+            enum: ["day", "week", "month", "all"]
+          required: false
+          description: In what range of time should rants be from
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          required: false
+          description: How many rants should be returned
+        - in: query
+          name: skip
+          schema:
+            type: integer
+            default: 0
+          required: false
+          description: How many rants to skip. "pages" can be inplemented by skipping groups of 50
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /devrant/supporters:
+    get:
+      description: Get a sorted list of all devRant++ Members
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /devrant/weekly-list:
+    get:
+      description: Get a list of weekly topics
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /devrant/weekly-rants:
+    get:
+      description: Get a sorted list of rants from the weekly topic
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: query
+          name: week
+          schema:
+            type: integer
+          required: true
+          description: The week to load
+        - in: query
+          name: sort
+          schema:
+            type: string
+            default: algo
+            enum: ["algo", "top", "recent"]
+          required: false
+          description: Which stream to fetch rants from
+        
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          required: false
+          description: How many rants should be returned
+        - in: query
+          name: skip
+          schema:
+            type: integer
+            default: 0
+          required: false
+          description: How many rants to skip. "pages" can be inplemented by skipping groups of 50
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /get-user-id:
+    get:
+      description: Get the user ID for a username (the backend uses IDs, not usernames)
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: query
+          name: username
+          schema:
+            type: string
+          required: true
+          description: User to get ID of
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
+  /users/{userId}:
+    get:
+      description: Get a user's profile from their ID
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: User's ID
+        - in: query
+          name: content
+          schema:
+            type: string
+            enum: ["all", "rants", "upvoted", "comments", "favorites", "collabs"]
+            default: all
+          required: false
+          description: What type of content to load
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
