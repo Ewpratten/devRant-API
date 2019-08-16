@@ -99,6 +99,55 @@ paths:
             description: OK
           '400':
             description: Invalid app id specified
+  /devrant/comments/{commentId}:
+    get:
+    
+      description: Get a sorted list of rants
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+            default: 3
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: query
+          name: plat
+          schema:
+            type: integer
+            default: 2
+          required: true
+          description: Platform identifier. This MUST be "2"
+        - in: path
+          name: commentId
+          schema:
+            type: integer
+          required: true
+          description: Which comment to load
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+          description: User ID for authenticated user
+        - in: query
+          name: token_id
+          schema:
+            type: integer
+          required: true
+          description: Auth token ID
+        - in: query
+          name: token_key
+          schema:
+            type: integer
+          required: true
+          description: Auth token key
+        
+      responses:
+          '200':
+            description: OK
+          '400':
+            description: Invalid arguments
   /devrant/rants/{rantId}/comments:
     post:
       description: This endpoint requires a user_id, token_token, and token_key. Refer to the top of the page for information about these
