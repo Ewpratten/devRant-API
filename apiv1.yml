@@ -493,3 +493,4 @@ paths:
         '400':
           description: Invalid app id specified
   
+  # TODO: Get and clear notifs. Voting. Account deletion. 
