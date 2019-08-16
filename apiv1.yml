@@ -1,12 +1,19 @@
 openapi: '3.0.2'
 info:
   title: devRant API
+  description: |
+    This is the unofficial documentation for the official devRant API.
+
+    To keep dfox happy, the endpoint for authentication is not included here. Some endpoints listed will require an token_token and token_key. You are on your own to figure out how to get these. 
+    (HINT: I have written two libraries that can do this)
+
   version: '1.0'
 servers:
   - url: https://devrant.com/api/
 paths:
   /devrant/rants:
     get:
+    
       description: Get a sorted list of rants
       parameters:
         - in: query
@@ -46,12 +53,53 @@ paths:
             default: 0
           required: false
           description: How many rants to skip. "pages" can be inplemented by skipping groups of 50
+      responses:
+          '200':
+            description: OK
+          '400':
+            description: Invalid app id specified
+    post:
+      description: This endpoint requires a user_id, token_token, and token_key. Refer to the top of the page for information about these
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: integer
+                  description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+                  
+                plat:
+                  type: integer
+                  description: Platform identifier. This MUST be "2"
+                
+                user_id:
+                  type: integer
+                  description: user_id of the authenticated user
+                
+                token_id:
+                  type: integer
+                  description: Authentication token id
+                
+                token_key:
+                  type: string
+                  description: Authenticaiton token key
+                
+                rant:
+                  type: string
+                  description: The main content of the rant
+
+                tags:
+                  type: string
+                  description: A comma-seperated list of tags
 
       responses:
-        '200':
-          description: OK
-        '400':
-          description: Invalid app id specified
+          '200':
+            description: OK
+          '400':
+            description: Invalid app id specified
+
   /devrant/collabs:
     get:
       description: Get a sorted list of collabs
@@ -348,3 +396,4 @@ paths:
           description: OK
         '400':
           description: Invalid app id specified
+  
