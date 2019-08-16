@@ -1,0 +1,52 @@
+openapi: '3.0.2'
+info:
+  title: devRant API
+  version: '1.0'
+servers:
+  - url: https://devrant.com/api/
+paths:
+  /devrant/rants:
+    get:
+      parameters:
+        - in: query
+          name: app
+          schema:
+            type: integer
+          required: true
+          description: App identifier. This currently MUST be "3". There is a feature request active right now to allow custom app codes.
+        - in: query
+          name: sort
+          schema:
+            type: string
+            default: algo
+            enum: ["algo", "top", "recent"]
+          required: false
+          description: Which stream to fetch rants from
+        - in: query
+          name: range
+          schema:
+            type: string
+            default: all
+            enum: ["day", "week", "month", "all"]
+          required: false
+          description: In what range of time should rants be from
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          required: false
+          description: How many rants should be returned
+        - in: query
+          name: skip
+          schema:
+            type: integer
+            default: 0
+          required: false
+          description: How many rants to skip. "pages" can be inplemented by skipping groups of 50
+
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid app id specified
